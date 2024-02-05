@@ -1,14 +1,13 @@
-import { Suspense } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+// Component native to this "host" microfrontend
 import Home from "./Home";
+
+// Micro Frontend Wrapper Components
 import Client1Wrapper from "./pages/Client1Wrapper";
 import Client2Wrapper from "./pages/Client2Wrapper";
 
 import "./App.css";
-// Lazy load the micro frontends
-// const Client1 = lazy(() => import("client1/Client1"));
-// const Client2 = lazy(() => import("client2/Client2"));
 
 function App() {
   const router = createBrowserRouter([
@@ -19,9 +18,8 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <RouterProvider router={router} />
+
     </>
   );
 }
