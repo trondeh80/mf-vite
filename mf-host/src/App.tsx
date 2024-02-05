@@ -1,5 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+// SkeBasis from skatteetaten frontend components
+import { SkeBasis } from '@skatteetaten/frontend-components/SkeBasis';
+
 // Component native to this "host" microfrontend
 import Home from "./Home";
 
@@ -18,8 +21,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
-
+      <SkeBasis>
+        <RouterProvider router={router} />
+      </SkeBasis >
     </>
   );
 }
