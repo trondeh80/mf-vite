@@ -1,19 +1,29 @@
-import { Suspense, lazy } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-// Lazy load the micro frontends
-const Client1 = lazy(() => import("client1/Client1"));
-const Client2 = lazy(() => import("client2/Client2"));
+// SkeBasis from skatteetaten frontend components
+import { SkeBasis } from '@skatteetaten/frontend-components/SkeBasis';
+
+// Component native to this "host" microfrontend
+import Home from "./Home";
+
+// Micro Frontend Wrapper Components
+import Client1Wrapper from "./pages/Client1Wrapper";
+import Client2Wrapper from "./pages/Client2Wrapper";
 
 import "./App.css";
 
 function App() {
+  const router = createBrowserRouter([
+    { path: "/", element: <Home /> },
+    { path: "/client1", element: <Client1Wrapper /> },
+    { path: "/client2", element: <Client2Wrapper /> },
+  ]);
+
   return (
     <>
-      <h1>Host app</h1>
-      <Suspense fallback={<p>Laster...</p>}>
-        <Client1 />
-        <Client2 />
-      </Suspense>
+      <SkeBasis>
+        <RouterProvider router={router} />
+      </SkeBasis >
     </>
   );
 }
