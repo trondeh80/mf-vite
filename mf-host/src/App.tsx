@@ -1,18 +1,26 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-// Lazy load the micro frontends
-const Client1 = lazy(() => import("client1/Client1"));
-const Client2 = lazy(() => import("client2/Client2"));
+import Home from "./Home";
+import Client1Wrapper from "./pages/Client1Wrapper";
+import Client2Wrapper from "./pages/Client2Wrapper";
 
 import "./App.css";
+// Lazy load the micro frontends
+// const Client1 = lazy(() => import("client1/Client1"));
+// const Client2 = lazy(() => import("client2/Client2"));
 
 function App() {
+  const router = createBrowserRouter([
+    { path: "/", element: <Home /> },
+    { path: "/client1", element: <Client1Wrapper /> },
+    { path: "/client2", element: <Client2Wrapper /> },
+  ]);
+
   return (
     <>
-      <h1>Host app</h1>
-      <Suspense fallback={<p>Laster...</p>}>
-        <Client1 />
-        <Client2 />
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
       </Suspense>
     </>
   );

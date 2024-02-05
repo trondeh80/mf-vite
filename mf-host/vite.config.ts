@@ -29,4 +29,7 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    manifest: "asset-manifest.json",
+  },
 });
