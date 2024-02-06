@@ -1,7 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
-// Hook to handle navigation events from other MF's
-import useNavigationEvents from "./useNavigationEvents";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // SkeBasis from skatteetaten frontend components
 import { SkeBasis } from '@skatteetaten/frontend-components/SkeBasis';
@@ -9,28 +6,37 @@ import { SkeBasis } from '@skatteetaten/frontend-components/SkeBasis';
 // Component native to this "host" microfrontend
 import Home from "./Home";
 
-// Micro Frontend Wrapper Components
+// Micro Frontend Wrapper Components - These are the components that lazy load the micro frontends
 import Client1Wrapper from "./pages/Client1Wrapper";
 import Client2Wrapper from "./pages/Client2Wrapper";
 
+// Navigation Wrapper that only initiates the event listener hook for client navigation
+import NavWrapper from "./NavWrapper";
+
+// Irreleveant styling for the app
 import "./App.css";
 
 
 function App() {
-
-  // Simple router for our whole app.
-  const router = createBrowserRouter([
-    { path: "/", element: <Home /> },
-    { path: "/client1", element: <Client1Wrapper /> },
-    { path: "/client2", element: <Client2Wrapper /> },
-  ]);
-
-  // Listen for custom navigation events using this hook:
-  useNavigationEvents(router);
-
   return (
     <SkeBasis>
-      <RouterProvider router={router} />
+      <header>
+        <h1>Host</h1>
+      </header>
+
+      <BrowserRouter>
+        <NavWrapper>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/client1" element={<Client1Wrapper />} />
+            <Route path="/client2" element={<Client2Wrapper />} />
+          </Routes>
+        </NavWrapper>
+      </BrowserRouter>
+
+      <footer>
+        <p>Host footer</p>
+      </footer>
     </SkeBasis >
   );
 }
